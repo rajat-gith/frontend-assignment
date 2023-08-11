@@ -1,0 +1,28 @@
+{
+  "plans": [
+    {
+      "name": "12 Months Subscription",
+      "total": "₹ 99",
+      "pm": "₹8",
+      "status": "expired"
+    },
+    {
+      "name": "12 Months Subscription",
+      "total": "₹ 179",
+      "pm": "₹15",
+      "status": "recommended"
+    },
+    {
+      "name": "6 Months Subscription",
+      "total": "₹ 149",
+      "pm": "₹25",
+      "status": ""
+    },
+    {
+      "name": "3 Months Subscription",
+      "total": "₹ 99",
+      "pm": "₹33",
+      "status": ""
+    }
+  ]
+}

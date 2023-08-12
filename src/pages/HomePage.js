@@ -1,12 +1,50 @@
-import React from "react";
+import React, { useState } from "react";
 import features from "../data.json";
 import plans from "../plans.json";
-import { Radio, FormControl } from "@mui/material";
+import { FormControl } from "@mui/material";
+
+const Radio = ({ value, name, onClick }) => {
+  const [checked, setChecked] = useState(false);
+
+  const handleClick = (e) => {
+    // Only allow one radio button to be checked at a time.
+    for (const radioButton of document.querySelectorAll(
+      "input[name='" + name + "']"
+    )) {
+      if (radioButton !== e.target) {
+        radioButton.checked = false;
+      }
+    }
+    setChecked(true);
+    onClick(e);
+  };
+
+  return (
+    <input
+      type="radio"
+      name={name}
+      value={value}
+      checked={checked}
+      onChange={handleClick}
+    />
+  );
+};
 
 function HomePage() {
+  const [totalPrice, setTotalPrice] = useState(18500);
+  const [discont, setDiscount] = useState(0);
+  const [finalPrice, setFinalPrice] = useState(0);
 
   const data = features.features;
   const data2 = plans.plans;
+
+  const handleRadioClick = (e) => {
+    setDiscount(e.target.value);
+    const fp = totalPrice - e.target.value;
+    console.log(fp);
+    setFinalPrice(fp);
+  };
+
   return (
     <div className="HomePage">
       <div className="leftPanel">
@@ -48,12 +86,18 @@ function HomePage() {
             {data2.map((key) => (
               <div className="plan">
                 <div className="leftContainer">
-                  <Radio value={key.id} />
+                  <Radio
+                    value={key.total}
+                    name="plan"
+                    onClick={handleRadioClick}
+                  >
+                    {key.name}
+                  </Radio>
                   <p>{key.name}</p>
                 </div>
                 <div className="priceContainer">
                   <p>
-                    Total: <span>{key.total}</span>
+                    Total: <span>₹ {key.total}</span>
                   </p>
                   <p>{key.pm}/mo</p>
                 </div>
@@ -68,7 +112,7 @@ function HomePage() {
             <div className="Alert">
               <div className="AlertHeader">
                 <p>Limited Time Offer</p>
-                <p>₹ price</p>
+                <p>- ₹ {finalPrice}</p>
               </div>
               <div className="AlertBody">
                 <img src="/assets/Icon-Clock.png" alt="" srcset="" />
@@ -78,7 +122,7 @@ function HomePage() {
 
             <div className="TotalContainer">
               <p>Total (Incl. of 18% GST)</p>
-              <p className="totalPrice">₹ Total Price</p>
+              <p className="totalPrice">₹ {discont}</p>
             </div>
 
             <div className="ButtonContainer">

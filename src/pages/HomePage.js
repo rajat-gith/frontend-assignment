@@ -3,7 +3,7 @@ import features from "../data.json";
 import plans from "../plans.json";
 import { FormControl } from "@mui/material";
 
-const Radio = ({ value, name, onClick }) => {
+const Radio = ({ value, name, onClick, disabled }) => {
   const [checked, setChecked] = useState(false);
 
   const handleClick = (e) => {
@@ -25,6 +25,7 @@ const Radio = ({ value, name, onClick }) => {
       name={name}
       value={value}
       checked={checked}
+      disabled={disabled}
       onChange={handleClick}
     />
   );
@@ -39,11 +40,25 @@ function HomePage() {
   const data2 = plans.plans;
 
   const handleRadioClick = (e) => {
+    e.preventDefault();
     setDiscount(e.target.value);
     const fp = totalPrice - e.target.value;
     console.log(fp);
     setFinalPrice(fp);
   };
+
+  function getStatusClassName(status) {
+    switch (status) {
+      case "expired":
+        return "expired";
+      case "recommended":
+        return "recommended";
+      case "standard":
+        return "standard";
+      default:
+        return ""; // Default class name or no class
+    }
+  }
 
   return (
     <div className="HomePage">
@@ -84,12 +99,13 @@ function HomePage() {
           </div>
           <div className="InputContainer">
             {data2.map((key) => (
-              <div className="plan">
+              <div className={`plan ${getStatusClassName(key.status)}`}>
                 <div className="leftContainer">
                   <Radio
                     value={key.total}
                     name="plan"
                     onClick={handleRadioClick}
+                    disabled={key.status === "expired"}
                   >
                     {key.name}
                   </Radio>

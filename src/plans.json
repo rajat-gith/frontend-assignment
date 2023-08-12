@@ -16,13 +16,13 @@
       "name": "6 Months Subscription",
       "total": "149",
       "pm": "₹25",
-      "status": ""
+      "status": "standard"
     },
     {
       "name": "3 Months Subscription",
       "total": "99",
       "pm": "₹33",
-      "status": ""
+      "status": "standard"
     }
   ]
 }
